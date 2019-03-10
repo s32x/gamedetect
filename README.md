@@ -19,3 +19,40 @@ curl -X POST https://gamedetect.io -F image=MY_GAME_SCREENSHOT.png
 ```
 
 Excited yet? I sure am! gamedetect is a fun project I've been playing with in my free time to learn about Computer Vision, Neural Networks, and Tensorflow. It's sort of my own hello world app that also could potentially serve a real use-case on Twitch or any other streaming platform that requires broadcasters to categorize their stream. That being said, I'm still very much a beginner to all of this and I'm sure I'm doing a number of things wrong - feel free to let me know in the issues if you'd like.
+
+### Running with Docker
+To start using IPData via Docker, install Docker and run `docker run`:
+```
+docker run -p 8080:8080 s32x/gamedetect
+```
+This will retrieve the remote DockerHub image and start the service on port 8080.
+
+The BSD 3-clause License
+========================
+
+Copyright (c) 2019, Steven Wolfe. All rights reserved.
+
+Redistribution and use in source and binary forms, with or without modification,
+are permitted provided that the following conditions are met:
+
+ - Redistributions of source code must retain the above copyright notice,
+   this list of conditions and the following disclaimer.
+
+ - Redistributions in binary form must reproduce the above copyright notice,
+   this list of conditions and the following disclaimer in the documentation
+   and/or other materials provided with the distribution.
+
+ - Neither the name of gamedetect nor the names of its contributors may
+   be used to endorse or promote products derived from this software without
+   specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
+ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
+ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.

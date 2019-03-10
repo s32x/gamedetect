@@ -1,26 +1,20 @@
 <!DOCTYPE html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!-->
-<html class="no-js">
-<!--<![endif]-->
+<html>
 
 <head>
+    <title>gamedetect | Game Detection/Identification</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title></title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Styles -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css" />
     <link rel="stylesheet" href="assets/css/site.css" />
 </head>
 
 <body>
-    <!--[if lt IE 7]>
-            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
-        <![endif]-->
     <div class="ui padded container">
         <h1>Identifying Gaming Livestreams with Tensorflow and Go</h1>
         <p>Using Tensorflow for image classification is</p>
@@ -41,7 +35,7 @@
     </div>
 
     <div class="ui padded container">
-        <h2>Example Result</h2>
+        <h2>Sanity Tests</h2>
 
         {{range .tests}}
         <div class="ui segments">
@@ -64,7 +58,7 @@
                             <tbody>
                                 {{range .Predictions}}
                                 <tr {{if (gt .Probability 0.80)}} class="positive" {{end}}
-                                    {{if (lt .Probability 0.10)}} class="negative" {{end}}>
+                                    {{if (lt .Probability 0.20)}} class="negative" {{end}}>
                                     <td>{{.Label}}</td>
                                     <td>{{.Probability}}</td>
                                 </tr>

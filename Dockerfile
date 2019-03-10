@@ -8,9 +8,9 @@ COPY / .
 # Dependencies
 RUN apt-get update -y && \
     apt-get upgrade -y
-RUN wget https://storage.googleapis.com/tensorflow/libtensorflow/libtensorflow-cpu-linux-x86_64-1.12.0.tar.gz
-RUN tar -C /usr/local -xzf libtensorflow-cpu-linux-x86_64-1.12.0.tar.gz
-RUN rm -f libtensorflow-cpu-linux-x86_64-1.12.0.tar.gz
+RUN wget https://storage.googleapis.com/tensorflow/libtensorflow/libtensorflow-cpu-linux-x86_64-1.12.0.tar.gz && \
+    tar -C /usr/local -xzf libtensorflow-cpu-linux-x86_64-1.12.0.tar.gz && \
+    rm -f libtensorflow-cpu-linux-x86_64-1.12.0.tar.gz
 RUN export GO111MODULE=on && \
     go get github.com/ahmetb/govvv && \
     go mod vendor
@@ -25,9 +25,9 @@ FROM ubuntu:latest
 RUN apt-get update -y && \
     apt-get upgrade -y && \
     apt-get install -y wget
-RUN wget https://storage.googleapis.com/tensorflow/libtensorflow/libtensorflow-cpu-linux-x86_64-1.12.0.tar.gz
-RUN tar -C /usr/local -xzf libtensorflow-cpu-linux-x86_64-1.12.0.tar.gz
-RUN rm -f libtensorflow-cpu-linux-x86_64-1.12.0.tar.gz
+RUN wget https://storage.googleapis.com/tensorflow/libtensorflow/libtensorflow-cpu-linux-x86_64-1.12.0.tar.gz && \
+    tar -C /usr/local -xzf libtensorflow-cpu-linux-x86_64-1.12.0.tar.gz && \
+    rm -f libtensorflow-cpu-linux-x86_64-1.12.0.tar.gz
 
 # Graph/Labels files
 COPY graph /graph

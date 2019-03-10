@@ -1,0 +1,39 @@
+version: 2
+jobs:
+  build:
+    working_directory: /go/src/s32x.com/gamedetect
+    environment:
+      - DOCKER_TAG: s32x/gamedetect
+      - HEROKU_APP: gamedetect
+    docker:
+      - image: circleci/golang:1.12
+    steps:
+      - checkout
+      - run:
+          name: Download Tensorflow
+          command: wget https://storage.googleapis.com/tensorflow/libtensorflow/libtensorflow-cpu-linux-x86_64-1.12.0.tar.gz
+      - run:
+          name: Untar Tensorflow
+          command: tar -C /usr/local -xzf libtensorflow-cpu-linux-x86_64-1.12.0.tar.gz
+      - run:
+          name: Download vendored Go dependencies
+          command: GO111MODULE=on go mod vendor
+      - run:
+          name: Run unit tests
+          command: make test
+      - setup_remote_docker
+      - run:
+          name: Build Docker image with binary
+          command: docker build --no-cache -t $DOCKER_TAG .
+      - run:
+          name: Login to DockerHub
+          command: docker login -u $DOCKER_USER -p $DOCKER_PASS
+      - run:
+          name: Push image to DockerHub
+          command: docker push $DOCKER_TAG
+      - run:
+          name: Install the Heroku CLI
+          command: curl https://cli-assets.heroku.com/install.sh | sh
+      - run:
+          name: Deploy the app
+          command: make deploy
