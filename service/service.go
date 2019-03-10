@@ -3,6 +3,7 @@ package service /* import "s32x.com/gamedetect/service" */
 import (
 	"log"
 	"net/http"
+	"strings"
 	"sync"
 	"text/template"
 
@@ -14,19 +15,20 @@ import (
 // Service is a struct that contains everything needed to perform image
 // predictions
 type Service struct {
+	env, domain string
 	mu          sync.Mutex
 	classifier  *classifier.Classifier
 	testResults []Result
 }
 
 // NewService creates a new Service reference using the given service params
-func NewService(graphPath, labelsPath string) (*Service, error) {
+func NewService(env, domain, graphPath, labelsPath string) (*Service, error) {
 	// Create the game classifier using it's default config
 	c, err := classifier.NewClassifier(graphPath, labelsPath)
 	if err != nil {
 		return nil, err
 	}
-	return &Service{classifier: c}, nil
+	return &Service{env: env, domain: domain, classifier: c}, nil
 }
 
 // Close closes the Service by closing all it's closers ;)
@@ -42,6 +44,22 @@ func (s *Service) Start(port string) {
 	e.HideBanner = true
 	e.Renderer = &Template{
 		templates: template.Must(template.ParseGlob("service/templates/*.html")),
+	}
+
+	// Configure SSL, WWW, and Host based redirects if being hosted in a
+	// production environment
+	if strings.Contains(strings.ToLower(s.env), "prod") {
+		e.Pre(middleware.HTTPSNonWWWRedirect())
+		e.Pre(func(next echo.HandlerFunc) echo.HandlerFunc {
+			return func(c echo.Context) error {
+				if c.Request().Host == s.domain {
+					return next(c)
+				}
+				return c.Redirect(http.StatusPermanentRedirect,
+					c.Scheme()+"://"+s.domain)
+			}
+		})
+		e.Pre(middleware.CORS())
 	}
 
 	// Bind all middleware

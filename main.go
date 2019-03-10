@@ -15,8 +15,10 @@ func main() {
 
 	// Generate a new service
 	s, err := service.NewService(
-		getenv("MODEL_PATH", "graph/output_graph.pb"),    // The environment to run the server in
-		getenv("LABELS_PATH", "graph/output_labels.txt"), // The host the server is running on)
+		getenv("ENV", "dev"),                             // The environment to run the server in
+		getenv("DOMAIN", "gamedetect.io"),                // The host the server is running on
+		getenv("MODEL_PATH", "graph/output_graph.pb"),    // The trained output graph
+		getenv("LABELS_PATH", "graph/output_labels.txt"), // The labels trained in the graph
 	)
 	if err != nil {
 		log.Fatal(err)
