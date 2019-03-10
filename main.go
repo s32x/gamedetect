@@ -1,4 +1,4 @@
-package main /* import "s32x.com/tfclass" */
+package main /* import "s32x.com/gamedetect" */
 
 import (
 	"log"
@@ -6,7 +6,7 @@ import (
 	"os"
 	"time"
 
-	"s32x.com/tfclass/service"
+	"s32x.com/gamedetect/service"
 )
 
 func main() {

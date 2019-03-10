@@ -1,4 +1,4 @@
-package service /* import "s32x.com/tfclass/service" */
+package service /* import "s32x.com/gamedetect/service" */
 
 import (
 	"log"
@@ -8,7 +8,7 @@ import (
 
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
-	"s32x.com/tfclass/classifier"
+	"s32x.com/gamedetect/classifier"
 )
 
 // Service is a struct that contains everything needed to perform image

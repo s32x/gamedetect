@@ -1,8 +1,8 @@
 # ============================== BINARY BUILDER ==============================
-FROM golang:1.12 as builder
+FROM golang:latest as builder
 
 # Copy in the source
-WORKDIR /go/src/s32x.com/tfclass
+WORKDIR /go/src/s32x.com/gamedetect
 COPY / .
 
 # Dependencies
@@ -31,7 +31,6 @@ RUN rm -f libtensorflow-cpu-linux-x86_64-1.12.0.tar.gz
 
 # Graph/Labels files
 COPY graph /graph
-COPY test /test
 COPY service/static /service/static
 
 # Environment
@@ -39,5 +38,5 @@ ENV LIBRARY_PATH=$LIBRARY_PATH:/usr/local/lib
 ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
 
 # Binary
-COPY --from=builder /go/src/s32x.com/tfclass/bin/server /usr/local/bin/server
+COPY --from=builder /go/src/s32x.com/gamedetect/bin/server /usr/local/bin/server
 CMD ["server"]

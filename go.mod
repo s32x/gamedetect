@@ -1,4 +1,4 @@
-module s32x.com/tfclass
+module s32x.com/gamedetect
 
 go 1.12
 

@@ -1,4 +1,4 @@
-package classifier /* import "s32x.com/tfclass/classifier" */
+package classifier /* import "s32x.com/gamedetect/classifier" */
 
 import (
 	"errors"

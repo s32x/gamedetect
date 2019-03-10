@@ -18,5 +18,5 @@ deploy:
 	make clean
 	make deps
 	heroku container:login
-	heroku container:push web -a tfclass
-	heroku container:release web -a tfclass
+	heroku container:push web -a gamedetect
+	heroku container:release web -a gamedetect

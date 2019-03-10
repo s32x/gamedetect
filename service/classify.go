@@ -1,4 +1,4 @@
-package service /* import "s32x.com/tfclass/service" */
+package service /* import "s32x.com/gamedetect/service" */
 
 import (
 	"bytes"
@@ -7,7 +7,7 @@ import (
 	"time"
 
 	"github.com/labstack/echo"
-	"s32x.com/tfclass/classifier"
+	"s32x.com/gamedetect/classifier"
 )
 
 // Results is a struct containing the results of a classified image

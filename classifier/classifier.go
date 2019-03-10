@@ -4,7 +4,7 @@
 // tensorhubs retrain.py
 // See: https://github.com/tensorflow/hub/blob/master/examples/image_retraining/retrain.py
 
-package classifier /* import "s32x.com/tfclass/classifier" */
+package classifier /* import "s32x.com/gamedetect/classifier" */
 
 import (
 	"bufio"

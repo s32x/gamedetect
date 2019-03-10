@@ -7,7 +7,7 @@ import (
 	"path/filepath"
 
 	"github.com/labstack/echo"
-	"s32x.com/tfclass/classifier"
+	"s32x.com/gamedetect/classifier"
 )
 
 // Result is a struct containing the results of a classified image
