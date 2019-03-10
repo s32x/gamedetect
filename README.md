@@ -2,6 +2,11 @@
 
 [![CircleCI](https://circleci.com/gh/s32x/gamedetect.svg?style=svg)](https://circleci.com/gh/s32x/gamedetect)
 
+<p align="center">
+    <img src="service/static/assets/images/repo.jpg" width="800px" border="0" alt="demo">
+</p>
+<br/>
+
 gamedetect is a simple API that uses a trained neural network to identify games that are within the top 100 currently on Twitch (as of March 2019). The full list of supported games can be seen [here](graph/output_labels.txt). The network is trained using [retrain.py](https://github.com/tensorflow/hub/blob/master/examples/image_retraining/retrain.py) which uses InceptionV3 as a pre-trained network. Honestly I'm still at the point where I have no idea what the hell I'm talking about so please bear with me.
 
 ## Try this...
