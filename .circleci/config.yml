@@ -14,7 +14,7 @@ jobs:
           command: wget https://storage.googleapis.com/tensorflow/libtensorflow/libtensorflow-cpu-linux-x86_64-1.12.0.tar.gz
       - run:
           name: Untar Tensorflow
-          command: tar -C /usr/local -xzf libtensorflow-cpu-linux-x86_64-1.12.0.tar.gz
+          command: sudo tar -C /usr/local -xzf libtensorflow-cpu-linux-x86_64-1.12.0.tar.gz
       - run:
           name: Download vendored Go dependencies
           command: GO111MODULE=on go mod vendor
