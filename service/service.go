@@ -33,9 +33,9 @@ func NewService(graphPath, labelsPath string) (*Service, error) {
 func (s *Service) Close() error { return s.classifier.Close() }
 
 // Start begins serving the generated Service on the passed port
-func (s *Service) Start(port, testDir string) {
+func (s *Service) Start(port string) {
 	// Process the testdata
-	go s.TestData(testDir)
+	go s.TestData("service/static/test")
 
 	// Create a new echo Echo and bind all middleware
 	e := echo.New()
@@ -55,7 +55,7 @@ func (s *Service) Start(port, testDir string) {
 	e.Use(middleware.Gzip())
 
 	// Create the static file endpoints
-	e.Static("*", "./service/static")
+	e.Static("*", "service/static")
 
 	// Bind all API endpoints
 	e.POST("/", s.Classify)

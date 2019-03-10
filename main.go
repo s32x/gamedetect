@@ -22,10 +22,7 @@ func main() {
 		log.Fatal(err)
 	}
 	defer s.Close()
-	s.Start(
-		getenv("PORT", "8080"),                     // The port the server will run on
-		getenv("TEST_PATH", "service/static/test"), // The host the server is running on)
-	)
+	s.Start(getenv("PORT", "8080")) // The port the server will run on
 }
 
 // getenv attempts to retrieve and return a variable from the environment. If it
