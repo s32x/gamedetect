@@ -1,0 +1,34 @@
+body {
+    background-color: #efefef;
+    color: #121212;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 400;
+    font-size: 15px;
+}
+
+h1 {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 600;
+    font-size: 35px;
+}
+
+h2 {
+    padding-bottom: 10px;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 400;
+    font-size: 30px;
+}
+
+h3 {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 300;
+    font-size: 23px;
+}
+
+.ui.container {
+    width: 500px;
+}
+
+.padded {
+    padding: 20px 0;
+}

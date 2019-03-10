@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js">
+<!--<![endif]-->
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css" />
+    <link rel="stylesheet" href="assets/css/site.css" />
+</head>
+
+<body>
+    <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+    <div class="ui padded container">
+        <h1>Identifying Gaming Livestreams with Tensorflow and Go</h1>
+        <p>Using Tensorflow for image classification is</p>
+        <h2>Some other Heading</h2>
+        <p>Bla this is another paragraph</p>
+        <code>Piping</code>
+    </div>
+
+    <div class="ui padded container">
+        <div class="ui centered grid">
+            <form id="image-form" class="ui form" method="post" enctype="multipart/form-data">
+                <label for="image-input" class="ui blue icon button">
+                    <i class="image icon"></i> Try it out!
+                </label>
+                <input id="image-input" type="file" name="image" style="display: none" accept="image/png, image/jpeg">
+            </form>
+        </div>
+    </div>
+
+    <div class="ui padded container">
+        <h2>Example Result</h2>
+
+        {{range .tests}}
+        <div class="ui segments">
+            <div class="ui segment">
+                <p>{{.Filename}} ({{.SpeedMS}} ms)</p>
+            </div>
+            <div class="ui secondary segment">
+                <div class="ui middle aligned grid">
+                    <div class="sixteen wide column">
+                        <img class="ui centered large image" src="/test/{{.Filename}}" />
+                    </div>
+                    <div class="sixteen wide column">
+                        <table class="ui table">
+                            <thead>
+                                <tr>
+                                    <th>Label</th>
+                                    <th>Probability</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {{range .Predictions}}
+                                <tr {{if (gt .Probability 0.80)}} class="positive" {{end}}
+                                    {{if (lt .Probability 0.10)}} class="negative" {{end}}>
+                                    <td>{{.Label}}</td>
+                                    <td>{{.Probability}}</td>
+                                </tr>
+                                {{end}}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{end}}
+    </div>
+    <script src="" async defer></script>
+    <script>
+        document.getElementById("image-input").onchange = function () {
+            document.getElementById("image-form").submit();
+        };
+    </script>
+</body>
+
+</html>
