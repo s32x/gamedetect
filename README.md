@@ -27,6 +27,9 @@ docker run -p 8080:8080 s32x/gamedetect
 ```
 This will retrieve the remote DockerHub image and start the service on port 8080.
 
+### Disclaimer
+The included trained graph is constantly being tweaked and retrained with new datasets as I learn more about what works and what doesn't. Your results likely won't be perfect however I'm constantly working on improving them!
+
 The BSD 3-clause License
 ========================
 
