@@ -9,18 +9,6 @@ jobs:
       - image: circleci/golang:1.12
     steps:
       - checkout
-      - run:
-          name: Download Tensorflow
-          command: wget https://storage.googleapis.com/tensorflow/libtensorflow/libtensorflow-cpu-linux-x86_64-1.12.0.tar.gz
-      - run:
-          name: Untar Tensorflow
-          command: sudo tar -C /usr/local -xzf libtensorflow-cpu-linux-x86_64-1.12.0.tar.gz
-      - run:
-          name: Download vendored Go dependencies
-          command: GO111MODULE=on go mod vendor
-      - run:
-          name: Run unit tests
-          command: make test
       - setup_remote_docker
       - run:
           name: Build Docker image with binary

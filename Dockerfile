@@ -15,6 +15,9 @@ RUN export GO111MODULE=on && \
     go get github.com/ahmetb/govvv && \
     go mod vendor
 
+# Run tests
+RUN make test
+
 # Build the binary
 RUN CGO_ENABLED=1 GOOS=linux go build -o ./bin/server
 
