@@ -2,24 +2,21 @@
 FROM golang:latest as builder
 
 # Copy in the source
-WORKDIR /go/src/s32x.com/gamedetect
-COPY / .
+COPY . /service
+WORKDIR /service
 
 # Dependencies
-RUN apt-get update -y && \
-    apt-get upgrade -y
-RUN wget https://storage.googleapis.com/tensorflow/libtensorflow/libtensorflow-cpu-linux-x86_64-1.12.0.tar.gz && \
-    tar -C /usr/local -xzf libtensorflow-cpu-linux-x86_64-1.12.0.tar.gz && \
-    rm -f libtensorflow-cpu-linux-x86_64-1.12.0.tar.gz
-RUN export GO111MODULE=on && \
-    go get github.com/ahmetb/govvv && \
-    go mod vendor
+RUN GO111MODULE=on go mod vendor
 
-# Run tests
-RUN make test
+# Install Tensorflow
+RUN wget https://storage.googleapis.com/tensorflow/libtensorflow/libtensorflow-cpu-linux-x86_64-1.12.0.tar.gz
+RUN tar -C /usr/local -xzf libtensorflow-cpu-linux-x86_64-1.12.0.tar.gz
+
+# Test before building
+RUN go test ./...
 
 # Build the binary
-RUN CGO_ENABLED=1 GOOS=linux go build -o ./bin/server
+RUN CGO_ENABLED=1 GOOS=linux GOARCH=amd64 go build -o ./bin/server
 
 # ================================ FINAL IMAGE ================================
 FROM ubuntu:latest
@@ -28,11 +25,13 @@ FROM ubuntu:latest
 RUN apt-get update -y && \
     apt-get upgrade -y && \
     apt-get install -y wget
-RUN wget https://storage.googleapis.com/tensorflow/libtensorflow/libtensorflow-cpu-linux-x86_64-1.12.0.tar.gz && \
-    tar -C /usr/local -xzf libtensorflow-cpu-linux-x86_64-1.12.0.tar.gz && \
-    rm -f libtensorflow-cpu-linux-x86_64-1.12.0.tar.gz
 
-# Graph/Labels files
+# Install Tensorflow
+RUN wget https://storage.googleapis.com/tensorflow/libtensorflow/libtensorflow-cpu-linux-x86_64-1.12.0.tar.gz
+RUN tar -C /usr/local -xzf libtensorflow-cpu-linux-x86_64-1.12.0.tar.gz
+RUN rm -f libtensorflow-cpu-linux-x86_64-1.12.0.tar.gz
+
+# Graph/Labels and static files
 COPY graph /graph
 COPY service/templates /service/templates
 COPY service/static /service/static
@@ -42,5 +41,5 @@ ENV LIBRARY_PATH=$LIBRARY_PATH:/usr/local/lib
 ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
 
 # Binary
-COPY --from=builder /go/src/s32x.com/gamedetect/bin/server /usr/local/bin/server
+COPY --from=builder /service/bin/server /usr/local/bin/server
 CMD ["server"]

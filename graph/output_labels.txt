@@ -4,9 +4,11 @@ anthem
 apex legends
 arma 3
 astroneer
+baba is you
 black desert online
 bloodborne
 call of duty black ops 4
+call of duty modern warfare remastered
 chess
 counter strike global offensive
 dark souls
@@ -14,16 +16,20 @@ dark souls iii
 darkest dungeon
 dead by daylight
 dead or alive 6
+demon s souls
 destiny 2
 devil may cry 5
 divinity original sin ii
+don t escape 4 days in a wasteland
 dota 2
 escape from tarkov
 euro truck simulator 2
 fifa 19
 final fantasy xiv online
 factory town
+final fantasy xv
 fortnite
+gears of war 4
 grand theft auto v
 h1z1
 hearthstone
@@ -42,15 +48,19 @@ magic the gathering
 marbles on stream
 metro exodus
 minecraft
+monopoly plus
 nba 2k19
 old school runescape
 outlaws of the old west
+overcooked 2
 overwatch
 playerunknown s battlegrounds
 pubg mobile
+papers please
 path of exile
 pathfinder kingmaker
 pogostuck rage with your friends
+pummel party
 resident evil 2
 rimworld
 rocket league
@@ -59,6 +69,7 @@ rust
 satisfactory
 sea of thieves
 sid meier s civilization vi
+skylanders ring of heroes
 slay the spire
 slime rancher
 slots
@@ -68,22 +79,30 @@ starcraft ii
 stardew valley
 subnautica
 super mario maker
+super mario odyssey
+super smash bros melee
 super smash bros ultimate
 tekken 7
 the binding of isaac afterbirth
 the elder scrolls online
+the jackbox party pack 5
 the legend of zelda breath of the wild
 the legend of zelda ocarina of time
+the legend of zelda the wind waker hd
 the sims 4
 the witcher
 the witcher 3 wild hunt
 tibia
 tom clancy s rainbow six siege
+tom clancy s the division 2
 trials rising
 vrchat
+viscera cleanup detail
 warcraft iii the frozen throne
 warframe
+welcome to the game ii
 world of tanks
 world of warcraft
 world of warships
 osu 
+skribbl io
