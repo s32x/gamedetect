@@ -97,7 +97,7 @@ def download_frames():
     max_images = 1050
 
     print("Getting top games")
-    # games = get_top_games(100)
+    # games = get_top_games(50)
     games = os.listdir("Screenshots")
 
     for game in games:

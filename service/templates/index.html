@@ -16,31 +16,35 @@
 
 <body>
     <div class="ui padded container">
-        <h2>Game Detection/Identification with Tensorflow and Go</h2>
+        <h1>Game Detection/Identification with Tensorflow and Go</h1>
         <div class="ui centered grid">
             <form id="image-form" class="ui form" method="post" enctype="multipart/form-data">
                 <label for="image-input" class="ui blue icon button">
-                    <i class="image icon"></i> Try it out!
+                    <i class="image icon"></i> Try it!
                 </label>
                 <input id="image-input" type="file" name="image" style="display: none" accept="image/png, image/jpeg">
             </form>
+            <a class="ui black button" href="https://github.com/s32x/gamedetect"><i class="github icon"></i> Github</a>
         </div>
     </div>
 
     <div class="ui padded container">
-        <h2>Sanity Tests</h2>
+        <h2>Sanity Tests ({{.tests.Correct}}/{{len .tests.Results}})</h2>
+        <h3>Overall Accuracy: {{.tests.Accuracy}}</h3>
 
-        {{range .tests}}
+        {{range .tests.Results}}
         <div class="ui segments">
-            <div class="ui segment">
-                <p>{{.Filename}} ({{.SpeedMS}} ms)</p>
+            <div class="ui {{if .Correct}}green{{else}}red{{end}} segment">
+                <p>{{.Filename}} ({{.SpeedMS}} ms)
+                    <i class="{{if .Correct}}check green{{else}}red times{{end}} circle icon"></i>
+                </p>
             </div>
             <div class="ui secondary segment">
-                <div class="ui middle aligned grid">
-                    <div class="sixteen wide column">
-                        <img class="ui centered large image" src="/test/{{.Filename}}" />
+                <div class="ui middle aligned stackable grid">
+                    <div class="eight wide column">
+                        <img class="ui centered large image" src="/test/{{.Expected}}/{{.Filename}}" />
                     </div>
-                    <div class="sixteen wide column">
+                    <div class="eight wide column">
                         <table class="ui table">
                             <thead>
                                 <tr>

@@ -1,5 +1,9 @@
+13 sentinels aegis rim prologue
+7 scarlet
+a dance of fire and ice
 ark
 atlas
+alien isolation
 anthem
 apex legends
 arma 3
@@ -7,6 +11,7 @@ astroneer
 baba is you
 black desert online
 bloodborne
+brawl stars
 call of duty black ops 4
 call of duty modern warfare remastered
 chess
@@ -19,15 +24,19 @@ dead or alive 6
 demon s souls
 destiny 2
 devil may cry 5
+diablo
+diablo ii lord of destruction
 divinity original sin ii
 don t escape 4 days in a wasteland
 dota 2
+epic seven
 escape from tarkov
 euro truck simulator 2
 fifa 19
 final fantasy xiv online
 factory town
 final fantasy xv
+fitness boxing
 fortnite
 gears of war 4
 grand theft auto v
@@ -37,18 +46,25 @@ heroes of might and magic iii the shadow of death
 heroes of the storm
 hollow knight
 human fall flat
+just dance 2019
 kageroh shadow corridor
+kartrider
 kerbal space program
 knight online
 league of legends
 life is strange
 lineage ii
+lost ark online
 madden nfl 19
 magic the gathering
 marbles on stream
+mario tennis aces
 metro exodus
 minecraft
+minion masters
+modern warfare 2
 monopoly plus
+mortal kombat x
 nba 2k19
 old school runescape
 outlaws of the old west
@@ -68,7 +84,9 @@ runescape
 rust
 satisfactory
 sea of thieves
+shenmue ii
 sid meier s civilization vi
+simulacra
 skylanders ring of heroes
 slay the spire
 slime rancher
@@ -77,14 +95,17 @@ smite
 spellbreak
 starcraft ii
 stardew valley
+steam
 subnautica
 super mario maker
 super mario odyssey
 super smash bros melee
 super smash bros ultimate
 tekken 7
+tetris 99
 the binding of isaac afterbirth
 the elder scrolls online
+the elder scrolls v skyrim
 the jackbox party pack 5
 the legend of zelda breath of the wild
 the legend of zelda ocarina of time
@@ -92,17 +113,20 @@ the legend of zelda the wind waker hd
 the sims 4
 the witcher
 the witcher 3 wild hunt
+the wolf among us
 tibia
 tom clancy s rainbow six siege
 tom clancy s the division 2
 trials rising
+tropico 5
 vrchat
 viscera cleanup detail
 warcraft iii the frozen throne
 warframe
 welcome to the game ii
+white day a labyrinth named school
 world of tanks
 world of warcraft
 world of warships
-osu 
+osu
 skribbl io

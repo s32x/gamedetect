@@ -1,45 +1,35 @@
 # ============================== BINARY BUILDER ==============================
-FROM golang:latest as builder
+FROM golang:1.12.1 as builder
 
 # Copy in the source
-COPY . /service
-WORKDIR /service
+COPY . /src
+WORKDIR /src
 
-# Dependencies
+# Download and Install Tensorflow CPU
+RUN mkdir local && \
+    curl -L https://storage.googleapis.com/tensorflow/libtensorflow/libtensorflow-cpu-linux-x86_64-1.12.0.tar.gz | \
+    tar -C local -xz && \
+    cp -a local /usr
+
+# Vendor, Test and Build the Binary
 RUN GO111MODULE=on go mod vendor
-
-# Install Tensorflow
-RUN wget https://storage.googleapis.com/tensorflow/libtensorflow/libtensorflow-cpu-linux-x86_64-1.12.0.tar.gz
-RUN tar -C /usr/local -xzf libtensorflow-cpu-linux-x86_64-1.12.0.tar.gz
-
-# Test before building
 RUN go test ./...
-
-# Build the binary
-RUN CGO_ENABLED=1 GOOS=linux GOARCH=amd64 go build -o ./bin/server
+RUN CGO_ENABLED=1 go build -o ./bin/server
 
 # ================================ FINAL IMAGE ================================
-FROM ubuntu:latest
+FROM ubuntu:18.04
 
 # Dependencies
-RUN apt-get update -y && \
-    apt-get upgrade -y && \
-    apt-get install -y wget
+RUN apt-get update -y && apt-get upgrade -y
 
-# Install Tensorflow
-RUN wget https://storage.googleapis.com/tensorflow/libtensorflow/libtensorflow-cpu-linux-x86_64-1.12.0.tar.gz
-RUN tar -C /usr/local -xzf libtensorflow-cpu-linux-x86_64-1.12.0.tar.gz
-RUN rm -f libtensorflow-cpu-linux-x86_64-1.12.0.tar.gz
+# Copy Tensorflow
+COPY --from=builder /src/local /usr
+ENV LIBRARY_PATH $LIBRARY_PATH:/usr/local/lib
+ENV LD_LIBRARY_PATH $LD_LIBRARY_PATH:/usr/local/lib
 
-# Graph/Labels and static files
-COPY graph /graph
-COPY service/templates /service/templates
-COPY service/static /service/static
-
-# Environment
-ENV LIBRARY_PATH=$LIBRARY_PATH:/usr/local/lib
-ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
-
-# Binary
-COPY --from=builder /service/bin/server /usr/local/bin/server
+# Copy Graph/Labels, static files and Binary
+COPY --from=builder /src/graph /graph
+COPY --from=builder /src/service/templates /service/templates
+COPY --from=builder /src/service/static /service/static
+COPY --from=builder /src/bin/server /usr/local/bin/server
 CMD ["server"]

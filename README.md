@@ -20,6 +20,8 @@ curl -X POST https://gamedetect.io -F image=MY_GAME_SCREENSHOT.png
 
 Excited yet? I sure am! gamedetect is a fun project I've been playing with in my free time to learn about Computer Vision, Neural Networks, and Tensorflow. It's sort of my own hello world app that also could potentially serve a real use-case on Twitch or any other streaming platform that requires broadcasters to categorize their stream. That being said, I'm still very much a beginner to all of this and I'm sure I'm doing a number of things wrong - feel free to let me know in the issues if you'd like.
 
+NOTE: The public API is currently just for demonstration purposes. It's recommended to utilize the below Docker image if you're interested in higher performance on your own machine/s.
+
 ### Running with Docker
 To start using gamedetect via Docker, install Docker and run `docker run`:
 ```

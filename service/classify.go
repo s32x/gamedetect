@@ -12,9 +12,9 @@ import (
 
 // Results is a struct containing the results of a classified image
 type Results struct {
-	Filename    string                  `json:"filename"`
-	Predictions []classifier.Prediction `json:"predictions"`
-	SpeedMS     int64                   `json:"speed_ms"`
+	Filename    string                  `json:"filename,omitempty"`
+	Predictions []classifier.Prediction `json:"predictions,omitempty"`
+	SpeedMS     int64                   `json:"speed_ms,omitempty"`
 }
 
 // Classify is an echo Handler that processes an image and returns its

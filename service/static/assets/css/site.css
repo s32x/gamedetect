@@ -7,13 +7,13 @@ body {
 }
 
 h1 {
+    padding-bottom: 10px;
     font-family: 'Open Sans', sans-serif;
     font-weight: 600;
     font-size: 35px;
 }
 
 h2 {
-    padding-bottom: 10px;
     font-family: 'Open Sans', sans-serif;
     font-weight: 400;
     font-size: 30px;
@@ -26,7 +26,7 @@ h3 {
 }
 
 .ui.container {
-    width: 500px;
+    width: 1000px;
 }
 
 .padded {
