@@ -48,6 +48,31 @@ func Index(tr *TestResults) echo.HandlerFunc {
 	}
 }
 
+func Demo(tr *TestResults, classifier *classifier.Classifier) echo.HandlerFunc {
+	return func(c echo.Context) error {
+		// Decode the image from the request
+		filename, bytes, err := decodeFile(c, "image")
+		if err != nil {
+			return newISErr(c, err)
+		}
+
+		// Perform the classification and return the results
+		start := nowMS()
+		predictions, err := classifier.ClassifyImage(filename, bytes)
+		if err != nil {
+			return newISErr(c, err)
+		}
+		return c.Render(http.StatusOK, "index", map[string]interface{}{
+			"result": &Results{
+				Filename:    filename,
+				Predictions: predictions,
+				SpeedMS:     nowMS() - start,
+			},
+			"tests": tr,
+		})
+	}
+}
+
 // ProcessTestData pre-processes all the test data in the passed testDir, returning
 // the results for serving on the demos index
 func ProcessTestData(classifier *classifier.Classifier, testDir string) (*TestResults, error) {
@@ -78,7 +103,6 @@ func ProcessTestData(classifier *classifier.Classifier, testDir string) (*TestRe
 		if err != nil {
 			return err
 		}
-		speedMS := nowMS() - start
 
 		// Store the test result in the slice of TestResults
 		correct := expected == predictions[0].Label
@@ -87,7 +111,7 @@ func ProcessTestData(classifier *classifier.Classifier, testDir string) (*TestRe
 			Expected:    expected,
 			Correct:     correct,
 			Predictions: predictions,
-			SpeedMS:     speedMS,
+			SpeedMS:     nowMS() - start,
 		})
 		if correct {
 			tr.Correct++

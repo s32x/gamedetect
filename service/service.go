@@ -76,6 +76,7 @@ func (s *Service) Start(env, domain, demo, port string) {
 		// Create the static file endpoints
 		e.Static("*", "service/static")
 		e.GET("/", Index(testData))
+		e.POST("/demo", Demo(testData, s.classifier))
 	}
 
 	// Bind all API endpoints

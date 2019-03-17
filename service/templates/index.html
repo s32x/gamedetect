@@ -18,7 +18,7 @@
     <div class="ui padded container">
         <h1>Game Detection/Identification with Tensorflow and Go</h1>
         <div class="ui centered grid">
-            <form id="image-form" class="ui form" method="post" enctype="multipart/form-data">
+            <form id="image-form" class="ui form" action="/demo" method="post" enctype="multipart/form-data">
                 <label for="image-input" class="ui blue icon button">
                     <i class="image icon"></i> Try it!
                 </label>
@@ -26,10 +26,41 @@
             </form>
             <a class="ui black button" href="https://github.com/s32x/gamedetect"><i class="github icon"></i> Github</a>
         </div>
+        {{if .result}}
+        <br/>
+        <div class="ui segments">
+            <div class="ui segment">
+                <p>{{.result.Filename}} ({{.result.SpeedMS}} ms)</p>
+            </div>
+            <div class="ui secondary segment">
+                <div class="ui middle aligned stackable grid">
+                    <div class="sixteen wide column">
+                        <table class="ui table">
+                            <thead>
+                                <tr>
+                                    <th>Label</th>
+                                    <th>Probability</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {{range .result.Predictions}}
+                                <tr {{if (gt .Probability 0.80)}} class="positive" {{end}}
+                                    {{if (lt .Probability 0.20)}} class="negative" {{end}}>
+                                    <td>{{.Label}}</td>
+                                    <td>{{.Probability}}</td>
+                                </tr>
+                                {{end}}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{end}}
     </div>
 
     <div class="ui padded container">
-        <h2>Sanity Tests ({{.tests.Correct}}/{{len .tests.Results}})</h2>
+        <h2>Static Sanity Tests ({{.tests.Correct}}/{{len .tests.Results}})</h2>
         <h3>Overall Accuracy: {{.tests.Accuracy}}</h3>
 
         {{range .tests.Results}}
