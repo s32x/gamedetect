@@ -56,8 +56,7 @@ def save_frame(out_dir, stream_url):
     cv2.imwrite(out_path, frame)
 
 
-pages = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25]
-
+pages = range(1, 25)
 
 def download_game_images(game_name, max_images):
     game_dir = os.path.join("Screenshots", game_name.replace(":", ""))
