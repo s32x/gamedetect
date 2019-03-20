@@ -10,5 +10,5 @@ require (
 	github.com/mattn/go-isatty v0.0.7 // indirect
 	github.com/tensorflow/tensorflow v1.13.1
 	github.com/valyala/fasttemplate v1.0.1 // indirect
-	golang.org/x/crypto v0.0.0-20190313024323-a1f597ede03a // indirect
+	golang.org/x/crypto v0.0.0-20190320223903-b7391e95e576 // indirect
 )

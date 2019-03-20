@@ -18,7 +18,6 @@ func main() {
 	}
 	defer s.Close()
 	s.Start(
-		getenv("ENV", "dev"),              // The environment to run the server in
 		getenv("DOMAIN", "gamedetect.io"), // The host the server is running on
 		getenv("DEMO", "false"),           // Perform sanity tests and serve the web frontend
 		getenv("PORT", "8080"),            // The port the server will run on

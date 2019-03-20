@@ -29,36 +29,21 @@ func NewService(graphPath, labelsPath string) (*Service, error) {
 func (s *Service) Close() error { return s.classifier.Close() }
 
 // Start begins serving the generated Service on the passed port
-func (s *Service) Start(env, domain, demo, port string) {
+func (s *Service) Start(domain, demo, port string) {
 	// Create a new echo Echo and bind all middleware
 	e := echo.New()
 	e.HideBanner = true
 
-	// Configure SSL, WWW, and Host based redirects if being hosted in a
-	// production environment
-	if strings.Contains(strings.ToLower(env), "prod") {
-		e.Pre(middleware.HTTPSNonWWWRedirect())
-		e.Pre(func(next echo.HandlerFunc) echo.HandlerFunc {
-			return func(c echo.Context) error {
-				if c.Request().Host == domain {
-					return next(c)
-				}
-				return c.Redirect(http.StatusPermanentRedirect,
-					c.Scheme()+"://"+domain)
-			}
-		})
-		e.Pre(middleware.CORS())
-	}
-
-	// Bind all middleware
+	// Bind middleware
 	e.Pre(middleware.RemoveTrailingSlashWithConfig(
 		middleware.TrailingSlashConfig{
 			RedirectCode: http.StatusPermanentRedirect,
 		}))
-	e.Pre(middleware.Secure())
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
+	e.Pre(middleware.Secure())
 	e.Use(middleware.Gzip())
+	e.Use(middleware.CORS())
 
 	// If hosting as a demonstration, configure a renderer, process all demo
 	// test data and serve all testdata and static assets on the index
@@ -81,6 +66,9 @@ func (s *Service) Start(env, domain, demo, port string) {
 
 	// Bind all API endpoints
 	e.POST("/", s.Classify)
+	e.GET("/healthcheck", func(c echo.Context) error {
+		return c.NoContent(http.StatusOK)
+	})
 
 	// Listen and Serve
 	log.Printf("Starting service on port %v\n", port)

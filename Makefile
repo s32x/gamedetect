@@ -13,8 +13,3 @@ install:
 	go install
 run:
 	DEMO=true go run main.go
-deploy:
-	make deps
-	heroku container:login
-	heroku container:push web -a gamedetect
-	heroku container:release web -a gamedetect

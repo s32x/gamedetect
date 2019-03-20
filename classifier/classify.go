@@ -92,7 +92,7 @@ func (c *Classifier) NormalizeOutputs(s *op.Scope, ext string) (tf.Output, tf.Ou
 		decode = op.DecodeGif(s, input)
 	case "bmp":
 		decode = op.DecodeBmp(s, input, op.DecodeBmpChannels(3))
-	default:
+	default: // Will default to Jpeg decode
 		decode = op.DecodeJpeg(s, input, op.DecodeJpegChannels(3))
 	}
 

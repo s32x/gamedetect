@@ -4,7 +4,6 @@ jobs:
     working_directory: /go/src/s32x.com/gamedetect
     environment:
       - DOCKER_TAG: s32x/gamedetect
-      - HEROKU_APP: gamedetect
     docker:
       - image: circleci/golang:1.12
     steps:
@@ -19,9 +18,3 @@ jobs:
       - run:
           name: Push image to DockerHub
           command: docker push $DOCKER_TAG
-      - run:
-          name: Install the Heroku CLI
-          command: curl https://cli-assets.heroku.com/install.sh | sh
-      - run:
-          name: Deploy the app
-          command: make deploy
