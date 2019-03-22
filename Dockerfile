@@ -20,7 +20,9 @@ RUN CGO_ENABLED=1 go build -o ./bin/server
 FROM ubuntu:18.04
 
 # Dependencies
-RUN apt-get update -y && apt-get upgrade -y
+RUN apt-get update -y && \
+    apt-get upgrade -y && \
+    apt-get install -y curl
 
 # Copy Tensorflow
 COPY --from=builder /src/local /usr
