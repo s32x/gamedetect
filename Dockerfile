@@ -21,8 +21,7 @@ FROM ubuntu:18.04
 
 # Dependencies
 RUN apt-get update -y && \
-    apt-get upgrade -y && \
-    apt-get install -y curl
+    apt-get upgrade -y
 
 # Copy Tensorflow
 COPY --from=builder /src/local /usr
