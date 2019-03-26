@@ -1,5 +1,5 @@
 # ============================== BINARY BUILDER ==============================
-FROM golang:1.12.1 as builder
+FROM golang:latest as builder
 
 # Copy in the source
 COPY . /src
