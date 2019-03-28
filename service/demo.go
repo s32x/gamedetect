@@ -1,9 +1,9 @@
-package service
+package service /* import "s32x.com/gamedetect/service" */
 
 import (
+	"errors"
 	"io"
 	"io/ioutil"
-	"log"
 	"net/http"
 	"os"
 	"path/filepath"
@@ -48,23 +48,25 @@ func Index(tr *TestResults) echo.HandlerFunc {
 	}
 }
 
+// Demo creates and returns a new echo Handler that performs demonstration
+// game screenshot verifications
 func Demo(tr *TestResults, classifier *classifier.Classifier) echo.HandlerFunc {
 	return func(c echo.Context) error {
-		// Decode the image from the request
-		filename, bytes, err := decodeFile(c, "image")
+		// Read the FileHeader from the request
+		fh, err := c.FormFile("image")
 		if err != nil {
 			return newISErr(c, err)
 		}
 
 		// Perform the classification and return the results
 		start := nowMS()
-		predictions, err := classifier.ClassifyImage(filename, bytes)
+		predictions, err := classifier.ClassifyMultipart(fh)
 		if err != nil {
 			return newISErr(c, err)
 		}
 		return c.Render(http.StatusOK, "index", map[string]interface{}{
 			"result": &Results{
-				Filename:    filename,
+				Filename:    fh.Filename,
 				Predictions: predictions,
 				SpeedMS:     nowMS() - start,
 			},
@@ -84,8 +86,6 @@ func ProcessTestData(classifier *classifier.Classifier, testDir string) (*TestRe
 			return nil
 		}
 
-		log.Println("Performing test on file:", path)
-
 		// Get the expected value for the test data
 		expected := strings.Split(strings.Replace(path, testDir, "", -1),
 			string(os.PathSeparator))[1]
@@ -96,10 +96,16 @@ func ProcessTestData(classifier *classifier.Classifier, testDir string) (*TestRe
 			return err
 		}
 
+		// Split out the filenames extension
+		fn := strings.Split(filename, ".")
+		if len(fn) < 2 {
+			return errors.New("Invalid filename passed")
+		}
+
 		// Classify the image and calculate the speed of the classification in
 		// milliseconds
 		start := nowMS()
-		predictions, err := classifier.ClassifyImage(filename, bytes)
+		predictions, err := classifier.ClassifyBytes(bytes, fn[len(fn)-1])
 		if err != nil {
 			return err
 		}

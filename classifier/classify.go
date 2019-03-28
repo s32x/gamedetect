@@ -1,7 +1,12 @@
 package classifier /* import "s32x.com/gamedetect/classifier" */
 
 import (
+	"bytes"
 	"errors"
+	"image"
+	"image/png"
+	"io"
+	"mime/multipart"
 	"sort"
 	"strings"
 
@@ -16,16 +21,44 @@ type Prediction struct {
 	Probability float32 `json:"probability"`
 }
 
-// ClassifyImage classifies a passed images bytes Buffer and returns the
-// predictions as a slice of Predictions
-func (c *Classifier) ClassifyImage(filename string, img []byte) ([]Prediction, error) {
-	// Split out the filenames extension
-	fn := strings.Split(filename, ".")
+// ClassifyImage takes an image Image, writes it to a bytes Buffer, performs a
+// classification and returns a slice of predictions
+func (c *Classifier) ClassifyImage(img image.Image) ([]Prediction, error) {
+	var buf bytes.Buffer
+	if err := png.Encode(&buf, img); err != nil {
+		return nil, err
+	}
+	return c.ClassifyBytes(buf.Bytes(), "png")
+}
+
+// ClassifyMultipart takes a multipart Fileheader, performs a classification
+// and returns a slice of predictions
+func (c *Classifier) ClassifyMultipart(fh *multipart.FileHeader) ([]Prediction, error) {
+	// Open the FileHeader and defer close it
+	file, err := fh.Open()
+	if err != nil {
+		return nil, err
+	}
+	defer file.Close()
+
+	// Read the bytes into a bytes buffer and return
+	var buf bytes.Buffer
+	if _, err := io.Copy(&buf, file); err != nil {
+		return nil, err
+	}
+
+	// Split out the filenames extension and return a full classification on
+	// the decoded bytes
+	fn := strings.Split(fh.Filename, ".")
 	if len(fn) < 2 {
 		return nil, errors.New("Invalid filename passed")
 	}
-	ext := fn[len(fn)-1]
+	return c.ClassifyBytes(buf.Bytes(), fn[len(fn)-1])
+}
 
+// ClassifyBytes classifies a passed images bytes and returns the predictions
+// as a slice of Predictions
+func (c *Classifier) ClassifyBytes(img []byte, ext string) ([]Prediction, error) {
 	// Create the scope and the input/output operations for normalization
 	s := op.NewScope()
 	in, out := c.NormalizeOutputs(s, ext)

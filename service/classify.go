@@ -1,8 +1,6 @@
 package service /* import "s32x.com/gamedetect/service" */
 
 import (
-	"bytes"
-	"io"
 	"net/http"
 	"time"
 
@@ -20,45 +18,23 @@ type Results struct {
 // Classify is an echo Handler that processes an image and returns its
 // predicted classifications
 func (s *Service) Classify(c echo.Context) error {
-	// Decode the image from the request
-	filename, bytes, err := decodeFile(c, "image")
+	// Read the FileHeader from the request
+	fh, err := c.FormFile("image")
 	if err != nil {
 		return newISErr(c, err)
 	}
 
 	// Perform the classification and return the results
 	start := nowMS()
-	predictions, err := s.classifier.ClassifyImage(filename, bytes)
+	predictions, err := s.classifier.ClassifyMultipart(fh)
 	if err != nil {
 		return newISErr(c, err)
 	}
 	return c.JSON(http.StatusOK, &Results{
-		Filename:    filename,
+		Filename:    fh.Filename,
 		Predictions: predictions,
 		SpeedMS:     nowMS() - start,
 	})
-}
-
-// decodeFile decodes a file from the passed echo Contexts form and returns
-// both the files name and it's bytes
-func decodeFile(c echo.Context, name string) (string, []byte, error) {
-	// Read the image from the request
-	fh, err := c.FormFile(name)
-	if err != nil {
-		return "", nil, err
-	}
-
-	// Open the image and defer close it
-	file, err := fh.Open()
-	if err != nil {
-		return "", nil, err
-	}
-	defer file.Close()
-
-	// Read the bytes into a bytes buffer and return
-	var buf bytes.Buffer
-	io.Copy(&buf, file)
-	return fh.Filename, buf.Bytes(), nil
 }
 
 // newISErr takes an error and encodes it in a map as a basic JSON response

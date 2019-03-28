@@ -17,7 +17,7 @@ RUN go test ./...
 RUN CGO_ENABLED=1 go build -o ./bin/server
 
 # ================================ FINAL IMAGE ================================
-FROM ubuntu:18.04
+FROM ubuntu:latest
 
 # Dependencies
 RUN apt-get update -y && \
