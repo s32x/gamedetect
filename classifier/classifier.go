@@ -1,6 +1,6 @@
 // This package is an extremely naive implementation of a tensorflow image
 // classification wrapper. It abstracts away a good amount of the boilerplate
-// required to load and process images using the model/label output from
+// required to load and process images using the model/label outputs from
 // tensorhubs retrain.py
 // See: https://github.com/tensorflow/hub/blob/master/examples/image_retraining/retrain.py
 
@@ -13,25 +13,6 @@ import (
 
 	tf "github.com/tensorflow/tensorflow/tensorflow/go"
 )
-
-// Config is a struct used for configuring the classifier
-type Config struct {
-	Height, Width           int32
-	Mean, Scale             float32
-	InputLayer, OutputLayer string
-	NumPredictions          int
-}
-
-// DefaultConfig is used in the case where a config is not defined by the user
-var DefaultConfig = Config{
-	Height:         299,
-	Width:          299,
-	Mean:           0,
-	Scale:          255,
-	InputLayer:     "Placeholder",
-	OutputLayer:    "final_result",
-	NumPredictions: 5,
-}
 
 // Classifier is a struct used for classifying images
 type Classifier struct {
@@ -75,7 +56,8 @@ func NewClassifierWithConfig(graphPath, labelPath string,
 	}
 
 	// Return a fully populated Classifier
-	return &Classifier{config, graph, session, labels}, nil
+	return &Classifier{config: config, graph: graph, session: session,
+		labels: labels}, nil
 }
 
 // Close closes the Classifier by closing all it's closers ;)

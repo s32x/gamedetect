@@ -61,7 +61,7 @@ func (c *Classifier) ClassifyMultipart(fh *multipart.FileHeader) ([]Prediction, 
 func (c *Classifier) ClassifyBytes(img []byte, ext string) ([]Prediction, error) {
 	// Create the scope and the input/output operations for normalization
 	s := op.NewScope()
-	in, out := c.NormalizeOutputs(s, ext)
+	in, out := normalize(s, ext, c.config)
 
 	// Create the graph on which the scope operates on
 	graph, err := s.Finalize()
@@ -88,12 +88,12 @@ func (c *Classifier) ClassifyBytes(img []byte, ext string) ([]Prediction, error)
 	if err != nil {
 		return nil, err
 	}
-	return c.ClassifyTensor(result[0])
+	return c.classifyTensor(result[0])
 }
 
-// ClassifyTensor processes the passed tensor using the Classifiers config
+// classifyTensor processes the passed tensor using the Classifiers config
 // and returns the perdictions as a slice of Predictions
-func (c *Classifier) ClassifyTensor(tensor *tf.Tensor) ([]Prediction, error) {
+func (c *Classifier) classifyTensor(tensor *tf.Tensor) ([]Prediction, error) {
 	// Create the input and output operation values for processing
 	in := c.graph.Operation(c.config.InputLayer).Output(0)
 	out := c.graph.Operation(c.config.OutputLayer).Output(0)
@@ -111,9 +111,9 @@ func (c *Classifier) ClassifyTensor(tensor *tf.Tensor) ([]Prediction, error) {
 	return mapPredictions(c.labels, values)[:c.config.NumPredictions], nil
 }
 
-// NormalizeOutputs produces an input and output operation output for
-// normalizing an image with the passex extension
-func (c *Classifier) NormalizeOutputs(s *op.Scope, ext string) (tf.Output, tf.Output) {
+// normalize produces an input and output operation output for normalizing an
+// image with the passed extension and Config
+func normalize(s *op.Scope, ext string, config Config) (tf.Output, tf.Output) {
 	input := op.Placeholder(s, tf.String)
 
 	// Decode the image
@@ -139,9 +139,9 @@ func (c *Classifier) NormalizeOutputs(s *op.Scope, ext string) (tf.Output, tf.Ou
 					// Use decoded pixel values
 					op.Cast(s, decode, tf.Float),
 					op.Const(s.SubScope("make_batch"), int32(0))),
-				op.Const(s.SubScope("size"), []int32{c.config.Height, c.config.Width})),
-			op.Const(s.SubScope("mean"), c.config.Mean)),
-		op.Const(s.SubScope("scale"), c.config.Scale))
+				op.Const(s.SubScope("size"), []int32{config.Height, config.Width})),
+			op.Const(s.SubScope("mean"), config.Mean)),
+		op.Const(s.SubScope("scale"), config.Scale))
 }
 
 // mapPredictions takes a slice of labels and prediction values and returns
