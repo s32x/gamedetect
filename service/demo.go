@@ -75,11 +75,13 @@ func Demo(tr *TestResults, classifier *classifier.Classifier) echo.HandlerFunc {
 	}
 }
 
-// ProcessTestData pre-processes all the test data in the passed testDir, returning
-// the results for serving on the demos index
-func ProcessTestData(classifier *classifier.Classifier, testDir string) (*TestResults, error) {
+// ProcessTestData pre-processes all the test data in the passed testDir,
+// returning the results for serving on the demos index
+func ProcessTestData(classifier *classifier.Classifier,
+	testDir string) (*TestResults, error) {
 	tr := &TestResults{}
-	if err := filepath.Walk(testDir, func(path string, fi os.FileInfo, err error) error {
+	if err := filepath.Walk(testDir, func(path string, fi os.FileInfo,
+		err error) error {
 		// If there's an error reading the file or it's a directory, return
 		filename := fi.Name()
 		if err != nil || fi.IsDir() || filename == ".DS_Store" {

@@ -56,7 +56,7 @@ func (c *Classifier) ClassifyMultipart(fh *multipart.FileHeader) ([]Prediction, 
 	return c.ClassifyBytes(buf.Bytes(), fn[len(fn)-1])
 }
 
-// ClassifyBytes classifies a passed images bytes and returns the predictions
+// ClassifyBytes classifies the passed images bytes and returns the predictions
 // as a slice of Predictions
 func (c *Classifier) ClassifyBytes(img []byte, ext string) ([]Prediction, error) {
 	// Create the scope and the input/output operations for normalization
