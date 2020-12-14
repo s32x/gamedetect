@@ -17,12 +17,6 @@ jobs:
 
       - name: Check out the repository
         uses: actions/checkout@v2
-
-      - name: Test all packages
-        run: go test -v ./...
-
-      - name: Build the apps server binary
-        run: go build -v -o server .
       
       - name: Push to Docker Hub
         uses: docker/build-push-action@v1
