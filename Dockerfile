@@ -7,7 +7,7 @@ WORKDIR /src
 
 # Download and Install Tensorflow CPU
 RUN mkdir local && \
-    curl -L https://storage.googleapis.com/tensorflow/libtensorflow/libtensorflow-cpu-linux-x86_64-1.12.0.tar.gz | \
+    curl -L https://storage.googleapis.com/tensorflow/libtensorflow/libtensorflow-cpu-linux-x86_64-2.3.1.tar.gz | \
     tar -C local -xz && \
     cp -a local /usr
 
