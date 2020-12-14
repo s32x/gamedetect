@@ -15,8 +15,8 @@ import (
 // predictions
 type Service struct{ classifier *classifier.Classifier }
 
-// NewService creates a new Service reference using the given service params
-func NewService(graphPath, labelsPath string) (*Service, error) {
+// New creates a new Service reference using the given service params
+func New(graphPath, labelsPath string) (*Service, error) {
 	// Create the game classifier using it's default config
 	c, err := classifier.NewClassifier(graphPath, labelsPath)
 	if err != nil {
@@ -28,8 +28,8 @@ func NewService(graphPath, labelsPath string) (*Service, error) {
 // Close closes the Service by closing all it's closers ;)
 func (s *Service) Close() error { return s.classifier.Close() }
 
-// Start begins serving the generated Service on the passed port
-func (s *Service) Start(domain, demo, port string) {
+// Echo creates and returns an echo router that serves the gamedetect api
+func (s *Service) Echo(domain, demo string) *echo.Echo {
 	// Create a new echo Echo and bind all middleware
 	e := echo.New()
 	e.HideBanner = true
@@ -69,8 +69,5 @@ func (s *Service) Start(domain, demo, port string) {
 	e.GET("/healthcheck", func(c echo.Context) error {
 		return c.NoContent(http.StatusOK)
 	})
-
-	// Listen and Serve
-	log.Printf("Starting service on port %v\n", port)
-	e.Logger.Fatal(e.Start(":" + port))
+	return e
 }

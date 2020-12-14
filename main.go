@@ -9,7 +9,7 @@ import (
 
 func main() {
 	// Generate a new service
-	s, err := service.NewService(
+	s, err := service.New(
 		getenv("MODEL_PATH", "graph/output_graph.pb"),    // The trained output graph
 		getenv("LABELS_PATH", "graph/output_labels.txt"), // The labels trained in the graph
 	)
@@ -17,11 +17,15 @@ func main() {
 		log.Fatal(err)
 	}
 	defer s.Close()
-	s.Start(
+
+	// Create the and start the echo api router
+	e := s.Echo(
 		getenv("DOMAIN", "gamedetect.io"), // The host the server is running on
 		getenv("DEMO", "false"),           // Perform sanity tests and serve the web frontend
-		getenv("PORT", "8080"),            // The port the server will run on
 	)
+	e.Logger.Fatal(e.Start(
+		":" + getenv("PORT", "8080"), // The port this service will be hosted on
+	))
 }
 
 // getenv attempts to retrieve and return a variable from the environment. If it

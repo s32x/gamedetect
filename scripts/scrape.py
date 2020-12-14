@@ -59,6 +59,7 @@ def save_frame(out_dir, stream_url):
 pages = range(1, 25)
 
 def download_game_images(game_name, max_images):
+    print("Download game images for " + str(game_name))
     game_dir = os.path.join("Screenshots", game_name.replace(":", ""))
 
     # Create the game directory if it doesn"t already exist
@@ -96,12 +97,10 @@ def download_frames():
     max_images = 1050
 
     print("Getting top games")
-    # games = get_top_games(50)
-    games = os.listdir("Screenshots")
+    games = get_top_games(100)
 
     for game in games:
-        # game_name = game["game"]["name"]
-        game_name = game
+        game_name = game["game"]["name"]
 
         if game_name == "Music & Performing Arts":
             continue
