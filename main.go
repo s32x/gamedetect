@@ -12,6 +12,8 @@ func main() {
 	s, err := service.New(
 		getenv("MODEL_PATH", "graph/output_graph.pb"),    // The trained output graph
 		getenv("LABELS_PATH", "graph/output_labels.txt"), // The labels trained in the graph
+		getenv("DOMAIN", "gamedetect.io"),                // The host the server is running on
+		getenv("DEMO", "false"),                          // Perform sanity tests and serve the web frontend
 	)
 	if err != nil {
 		log.Fatal(err)
@@ -19,10 +21,7 @@ func main() {
 	defer s.Close()
 
 	// Create the and start the echo api router
-	e := s.Echo(
-		getenv("DOMAIN", "gamedetect.io"), // The host the server is running on
-		getenv("DEMO", "false"),           // Perform sanity tests and serve the web frontend
-	)
+	e := s.Echo()
 	e.Logger.Fatal(e.Start(
 		":" + getenv("PORT", "8080"), // The port this service will be hosted on
 	))

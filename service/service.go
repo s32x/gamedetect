@@ -13,23 +13,31 @@ import (
 
 // Service is a struct that contains everything needed to perform image
 // predictions
-type Service struct{ classifier *classifier.Classifier }
+type Service struct {
+	classifier *classifier.Classifier
+	domain     string
+	demo       string
+}
 
 // New creates a new Service reference using the given service params
-func New(graphPath, labelsPath string) (*Service, error) {
+func New(graphPath, labelsPath, domain, demo string) (*Service, error) {
 	// Create the game classifier using it's default config
 	c, err := classifier.NewClassifier(graphPath, labelsPath)
 	if err != nil {
 		return nil, err
 	}
-	return &Service{c}, nil
+	return &Service{
+		classifier: c,
+		domain:     domain,
+		demo:       demo,
+	}, nil
 }
 
 // Close closes the Service by closing all it's closers ;)
 func (s *Service) Close() error { return s.classifier.Close() }
 
 // Echo creates and returns an echo router that serves the gamedetect api
-func (s *Service) Echo(domain, demo string) *echo.Echo {
+func (s *Service) Echo() *echo.Echo {
 	// Create a new echo Echo and bind all middleware
 	e := echo.New()
 	e.HideBanner = true
@@ -47,7 +55,7 @@ func (s *Service) Echo(domain, demo string) *echo.Echo {
 
 	// If hosting as a demonstration, configure a renderer, process all demo
 	// test data and serve all testdata and static assets on the index
-	if strings.Contains(strings.ToLower(demo), "true") {
+	if strings.Contains(strings.ToLower(s.demo), "true") {
 		e.Renderer = &Template{
 			ts: template.Must(template.ParseGlob("service/templates/*.html")),
 		}
