@@ -1,4 +1,4 @@
-package service /* import "s32x.com/gamedetect/service" */
+package service
 
 import (
 	"errors"
@@ -11,7 +11,7 @@ import (
 	"text/template"
 
 	"github.com/labstack/echo/v4"
-	"s32x.com/gamedetect/classifier"
+	"github.com/s32x/gamedetect/classifier"
 )
 
 // Template contains pre-processed templates for rendering

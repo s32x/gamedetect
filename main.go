@@ -1,10 +1,10 @@
-package main /* import "s32x.com/gamedetect" */
+package main
 
 import (
 	"log"
 	"os"
 
-	"s32x.com/gamedetect/service"
+	"github.com/s32x/gamedetect/service"
 )
 
 func main() {

@@ -1,4 +1,4 @@
-package classifier /* import "s32x.com/gamedetect/classifier" */
+package classifier
 
 import (
 	"bytes"

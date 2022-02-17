@@ -1,4 +1,4 @@
-package classifier /* import "s32x.com/gamedetect/classifier" */
+package classifier
 
 // Config is a struct used for configuring the classifier
 type Config struct {

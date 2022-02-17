@@ -1,11 +1,11 @@
-package service /* import "s32x.com/gamedetect/service" */
+package service
 
 import (
 	"net/http"
 	"time"
 
 	"github.com/labstack/echo/v4"
-	"s32x.com/gamedetect/classifier"
+	"github.com/s32x/gamedetect/classifier"
 )
 
 // Results is a struct containing the results of a classified image
